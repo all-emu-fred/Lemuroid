@@ -21,11 +21,13 @@ class GameMenuSavesViewModel(
     private val exporter: SaveStatesExporter,
     private val importer: SaveStatesImporter,
 ) : AndroidViewModel(application) {
-
     sealed class TransferState {
         object Idle : TransferState()
+
         object Working : TransferState()
+
         data class Success(val message: String) : TransferState()
+
         data class Error(val message: String) : TransferState()
     }
 
@@ -41,10 +43,11 @@ class GameMenuSavesViewModel(
         viewModelScope.launch {
             _transferState.value = TransferState.Working
             val result = exporter.exportToUri(getApplication(), game, coreID, uri)
-            _transferState.value = result.fold(
-                onSuccess = { TransferState.Success("ok") },
-                onFailure = { e -> TransferState.Error(e.message ?: "Unknown error") },
-            )
+            _transferState.value =
+                result.fold(
+                    onSuccess = { TransferState.Success("ok") },
+                    onFailure = { e -> TransferState.Error(e.message ?: "Unknown error") },
+                )
         }
     }
 
@@ -52,14 +55,18 @@ class GameMenuSavesViewModel(
         viewModelScope.launch {
             _transferState.value = TransferState.Working
             val result = importer.importSrm(getApplication(), game, uri)
-            _transferState.value = result.fold(
-                onSuccess = { TransferState.Success("ok") },
-                onFailure = { e -> TransferState.Error(e.message ?: "Unknown error") },
-            )
+            _transferState.value =
+                result.fold(
+                    onSuccess = { TransferState.Success("ok") },
+                    onFailure = { e -> TransferState.Error(e.message ?: "Unknown error") },
+                )
         }
     }
 
-    fun onStateFilesSelected(stateUri: Uri, metadataUri: Uri?) {
+    fun onStateFilesSelected(
+        stateUri: Uri,
+        metadataUri: Uri?,
+    ) {
         _pendingStateImport.value = PendingStateImport(stateUri, metadataUri)
     }
 
@@ -68,11 +75,20 @@ class GameMenuSavesViewModel(
         _pendingStateImport.value = null
         viewModelScope.launch {
             _transferState.value = TransferState.Working
-            val result = importer.importState(getApplication(), game, coreID, pending.stateUri, pending.metadataUri, slot)
-            _transferState.value = result.fold(
-                onSuccess = { TransferState.Success("ok") },
-                onFailure = { e -> TransferState.Error(e.message ?: "Unknown error") },
-            )
+            val result =
+                importer.importState(
+                    getApplication(),
+                    game,
+                    coreID,
+                    pending.stateUri,
+                    pending.metadataUri,
+                    slot,
+                )
+            _transferState.value =
+                result.fold(
+                    onSuccess = { TransferState.Success("ok") },
+                    onFailure = { e -> TransferState.Error(e.message ?: "Unknown error") },
+                )
         }
     }
 

@@ -7,8 +7,10 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 class CheatsManager(private val sharedPreferences: Lazy<SharedPreferences>) {
-
-    fun saveGameCheats(gameId: Int, cheats: List<CheatEntry>) {
+    fun saveGameCheats(
+        gameId: Int,
+        cheats: List<CheatEntry>,
+    ) {
         val json = Json.encodeToString(cheats)
         sharedPreferences.get().edit().putString(prefKey(gameId), json).apply()
     }

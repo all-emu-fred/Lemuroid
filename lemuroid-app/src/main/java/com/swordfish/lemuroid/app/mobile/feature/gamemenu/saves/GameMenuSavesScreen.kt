@@ -39,55 +39,59 @@ fun GameMenuSavesScreen(
     val transferState by viewModel.transferState.collectAsState()
     val pendingStateImport by viewModel.pendingStateImport.collectAsState()
 
-    val exportLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult(),
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { viewModel.exportSaves(it) }
+    val exportLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartActivityForResult(),
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.data?.let { viewModel.exportSaves(it) }
+            }
         }
-    }
 
-    val srmImportLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult(),
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { viewModel.importSrm(it) }
+    val srmImportLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartActivityForResult(),
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.data?.let { viewModel.importSrm(it) }
+            }
         }
-    }
 
-    val stateImportLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult(),
-    ) { result ->
-        if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
-        val data = result.data ?: return@rememberLauncherForActivityResult
+    val stateImportLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartActivityForResult(),
+        ) { result ->
+            if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
+            val data = result.data ?: return@rememberLauncherForActivityResult
 
-        val uris = mutableListOf<Uri>()
-        data.clipData?.let { clip ->
-            for (i in 0 until clip.itemCount) uris.add(clip.getItemAt(i).uri)
-        } ?: data.data?.let { uris.add(it) }
+            val uris = mutableListOf<Uri>()
+            data.clipData?.let { clip ->
+                for (i in 0 until clip.itemCount) uris.add(clip.getItemAt(i).uri)
+            } ?: data.data?.let { uris.add(it) }
 
-        fun getDisplayName(uri: Uri): String? =
-            context.contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
-                ?.use { if (it.moveToFirst()) it.getString(0) else null }
+            fun getDisplayName(uri: Uri): String? =
+                context.contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
+                    ?.use { if (it.moveToFirst()) it.getString(0) else null }
 
-        var stateUri: Uri? = null
-        var metadataUri: Uri? = null
-        for (uri in uris) {
-            val name = getDisplayName(uri) ?: continue
-            if (name.endsWith(".metadata")) metadataUri = uri else stateUri = uri
+            var stateUri: Uri? = null
+            var metadataUri: Uri? = null
+            for (uri in uris) {
+                val name = getDisplayName(uri) ?: continue
+                if (name.endsWith(".metadata")) metadataUri = uri else stateUri = uri
+            }
+            stateUri?.let { viewModel.onStateFilesSelected(it, metadataUri) }
         }
-        stateUri?.let { viewModel.onStateFilesSelected(it, metadataUri) }
-    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         LemuroidSettingsMenuLink(
             title = { Text(stringResource(R.string.game_menu_saves_export)) },
             onClick = {
-                val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                    addCategory(Intent.CATEGORY_OPENABLE)
-                    type = "application/zip"
-                    putExtra(Intent.EXTRA_TITLE, "${game.title} saves.zip")
-                }
+                val intent =
+                    Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                        addCategory(Intent.CATEGORY_OPENABLE)
+                        type = "application/zip"
+                        putExtra(Intent.EXTRA_TITLE, "${game.title} saves.zip")
+                    }
                 exportLauncher.launch(intent)
             },
         )
@@ -95,10 +99,11 @@ fun GameMenuSavesScreen(
         LemuroidSettingsMenuLink(
             title = { Text(stringResource(R.string.game_menu_saves_import_srm)) },
             onClick = {
-                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                    addCategory(Intent.CATEGORY_OPENABLE)
-                    type = "*/*"
-                }
+                val intent =
+                    Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                        addCategory(Intent.CATEGORY_OPENABLE)
+                        type = "*/*"
+                    }
                 srmImportLauncher.launch(intent)
             },
         )
@@ -106,11 +111,12 @@ fun GameMenuSavesScreen(
         LemuroidSettingsMenuLink(
             title = { Text(stringResource(R.string.game_menu_saves_import_state)) },
             onClick = {
-                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                    addCategory(Intent.CATEGORY_OPENABLE)
-                    type = "*/*"
-                    putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-                }
+                val intent =
+                    Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                        addCategory(Intent.CATEGORY_OPENABLE)
+                        type = "*/*"
+                        putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                    }
                 stateImportLauncher.launch(intent)
             },
         )
@@ -118,9 +124,10 @@ fun GameMenuSavesScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp),
             contentAlignment = Alignment.TopCenter,
         ) {
             when (val state = transferState) {

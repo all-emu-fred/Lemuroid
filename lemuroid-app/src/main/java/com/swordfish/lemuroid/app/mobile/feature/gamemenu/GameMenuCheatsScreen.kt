@@ -46,9 +46,10 @@ fun GameMenuCheatsScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         if (currentCheats.isEmpty()) {
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = 80.dp),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 80.dp),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
@@ -59,9 +60,10 @@ fun GameMenuCheatsScreen(
             }
         } else {
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = 80.dp),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 80.dp),
             ) {
                 itemsIndexed(currentCheats) { index, cheat ->
                     CheatEntryRow(
@@ -86,9 +88,10 @@ fun GameMenuCheatsScreen(
 
         FloatingActionButton(
             onClick = { showAddDialog = true },
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(16.dp),
+            modifier =
+                Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(16.dp),
         ) {
             Icon(
                 Icons.Filled.Add,
@@ -117,9 +120,10 @@ private fun CheatEntryRow(
     onDelete: () -> Unit,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {

@@ -178,8 +178,9 @@ class GameViewModelTouchControls(
         event: InputEvent.Button,
         settings: TouchControllerSettingsManager.Settings?,
     ) {
-        val isTurboTrigger = touchControlId.value in TouchControllerID.TURBO_SUPPORTED_CONTROLLERS &&
-            (event.id == KeyEvent.KEYCODE_BUTTON_Y || event.id == KeyEvent.KEYCODE_BUTTON_Z)
+        val isTurboTrigger =
+            touchControlId.value in TouchControllerID.TURBO_SUPPORTED_CONTROLLERS &&
+                (event.id == KeyEvent.KEYCODE_BUTTON_Y || event.id == KeyEvent.KEYCODE_BUTTON_Z)
 
         if (isTurboTrigger) {
             val targetKeyCode =

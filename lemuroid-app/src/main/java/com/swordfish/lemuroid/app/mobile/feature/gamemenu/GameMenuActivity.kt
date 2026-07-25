@@ -49,17 +49,17 @@ import com.swordfish.lemuroid.app.mobile.feature.gamemenu.saves.GameMenuSavesScr
 import com.swordfish.lemuroid.app.mobile.feature.gamemenu.saves.GameMenuSavesViewModel
 import com.swordfish.lemuroid.app.mobile.feature.gamemenu.states.GameMenuStatesScreen
 import com.swordfish.lemuroid.app.mobile.feature.gamemenu.states.GameMenuStatesViewModel
-import com.swordfish.lemuroid.lib.cheats.CheatEntry
-import com.swordfish.lemuroid.lib.saves.SaveStatesExporter
-import com.swordfish.lemuroid.lib.saves.SaveStatesImporter
 import com.swordfish.lemuroid.app.mobile.shared.compose.ui.AppTheme
 import com.swordfish.lemuroid.app.shared.GameMenuContract
 import com.swordfish.lemuroid.app.shared.coreoptions.LemuroidCoreOption
 import com.swordfish.lemuroid.app.shared.input.InputDeviceManager
 import com.swordfish.lemuroid.common.kotlin.serializable
 import com.swordfish.lemuroid.lib.android.RetrogradeComponentActivity
+import com.swordfish.lemuroid.lib.cheats.CheatEntry
 import com.swordfish.lemuroid.lib.library.SystemCoreConfig
 import com.swordfish.lemuroid.lib.library.db.entity.Game
+import com.swordfish.lemuroid.lib.saves.SaveStatesExporter
+import com.swordfish.lemuroid.lib.saves.SaveStatesImporter
 import com.swordfish.lemuroid.lib.saves.StatesManager
 import com.swordfish.lemuroid.lib.saves.StatesPreviewManager
 import com.swordfish.touchinput.radial.sensors.TiltConfiguration
@@ -273,13 +273,14 @@ class GameMenuActivity : RetrogradeComponentActivity() {
                     composable(GameMenuRoute.SAVES_MANAGER) {
                         GameMenuSavesScreen(
                             viewModel(
-                                factory = GameMenuSavesViewModel.Factory(
-                                    application,
-                                    gameMenuRequest.game,
-                                    gameMenuRequest.coreConfig.coreID,
-                                    saveStatesExporter,
-                                    saveStatesImporter,
-                                ),
+                                factory =
+                                    GameMenuSavesViewModel.Factory(
+                                        application,
+                                        gameMenuRequest.game,
+                                        gameMenuRequest.coreConfig.coreID,
+                                        saveStatesExporter,
+                                        saveStatesImporter,
+                                    ),
                             ),
                             gameMenuRequest.game,
                         )
@@ -318,7 +319,8 @@ class GameMenuActivity : RetrogradeComponentActivity() {
     private fun onResult(block: Intent.() -> Unit) {
         val resultIntent = Intent()
         resultIntent.block()
-        if (latestCheats.isNotEmpty() || intent.extras?.getBoolean(GameMenuContract.EXTRA_CHEATS_SUPPORTED, false) == true) {
+        val cheatsSupported = intent.extras?.getBoolean(GameMenuContract.EXTRA_CHEATS_SUPPORTED, false) == true
+        if (latestCheats.isNotEmpty() || cheatsSupported) {
             resultIntent.putExtra(GameMenuContract.RESULT_CHEATS, ArrayList(latestCheats))
         }
         setResult(RESULT_OK, resultIntent)
