@@ -49,8 +49,6 @@ From the project root (./Lemuroid):
 #### The "free bundle" variant bundles cores directly into the APK (no Play dynamic delivery)
 or arm64-v8a only
 `./gradlew :lemuroid-app:assembleFreeBundle  -PabiFilter=arm64-v8a`
-or full
-
 or bundle
 `./gradlew :lemuroid-app:assembleFreeBundleRelease -PabiFilter=arm64-v8a`
 
