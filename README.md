@@ -5,6 +5,10 @@ I've tried to add libreto SameBoy/mGBA for GB and GBC, but there was a mismatch 
 
 But do not worry, i've build a tutorial on how i did it with AzaharPlus [here](https://github.com/vasile-coste/LemuroidCores/blob/master/CORE_CREATION_EXAMPLE.md). So feel free to experiment!
 
+### Notes on roms not scanning
+- If you added some ps1 (PlayStation) roms and Lemuroid is not scanning them, the problem is in the folder name. The folder should be called **psx** and put there your roms("iso", "pbp", "chd", "cue", "m3u")
+
+
 ### Cheat support for:
 - NES core, ex: [Game Genie format](https://gamegenie.com/cheats/nes/index.html)
 - SNES core, ex: [Game Genie format](https://gamegenie.com/cheats/snes/index.html)
@@ -36,9 +40,8 @@ CPU: Snapdragon 835 SoC or better
 GPU: OpenGL ES 3.2 or Vulkan 1.1 support
 Memory: 2GB of RAM. 4GB is recommended
 ```
-Tested on Samsung S25
 
-Note: 3DS Citra and AzaharPlus only work with arm64-v8a
+**Note**: 3DS Citra and AzaharPlus only work with arm64-v8a
 
 
 ### Globals:
@@ -48,9 +51,6 @@ Note: 3DS Citra and AzaharPlus only work with arm64-v8a
 - fixed a Lemuroid bug where some **GBC** roms were mapped as **GB** roms
 - added **delete** option when press and hold on a rom. **Note** this will also delete it from device. 
 **If is a fresh install** you need to accept the permission to read/write; **if is an update**, to activate this permission, you need to go to settings an reselect your rom folder to be prompted with the permission to write, otherwise the file won't be deleted from device
-
-### Notes:
-- as i do not have a sign key the app will appear as LemuroidDebug
 
 ### Build the project instructions:
 [Build info](/BUILD.md)
