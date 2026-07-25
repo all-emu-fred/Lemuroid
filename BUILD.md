@@ -46,7 +46,12 @@ From the project root (./Lemuroid):
 
 
 #### The "free bundle" variant bundles cores directly into the APK (no Play dynamic delivery)
+or arm64-v8a only
+`./gradlew :lemuroid-app:assembleFreeBundle  -PabiFilter=arm64-v8a`
+or full
 `./gradlew :lemuroid-app:assembleFreeBundle`
+or bundle
+`./gradlew :lemuroid-app:assembleFreeBundleRelease -PabiFilter=arm64-v8a`
 
 #### Or for a debug build (faster, no signing required):
 `./gradlew :lemuroid-app:assembleFreeBundleDebug`
@@ -54,6 +59,8 @@ From the project root (./Lemuroid):
 
 The APK will be at:
 `lemuroid-app/build/outputs/apk/freeBundle/debug/lemuroid-app-freeBundle-debug.apk`
+or
+`lemuroid-app/build/outputs/apk/freeBundle/release/lemuroid-app-free-bundle-release.apk`
 Flavor explanation
 The project has two dimensions:
 
@@ -64,6 +71,23 @@ Use freeBundle for a self-contained sideloadable APK.
 3. Install directly to a connected device (optional)
 
 ./gradlew :lemuroid-app:installFreeBundleDebug
+
+4. Restricting which ABIs get built (optional)
+
+By default the APK bundles native `.so` libraries for all 4 ABIs (`arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64`). Pass `-PabiFilter=<abi>` to restrict the build to a single ABI (smaller APK, faster build) — e.g. for a release build targeting only modern 64-bit ARM devices:
+
+```
+./gradlew assembleRelease -PabiFilter=arm64-v8a
+```
+
+Omit the property to build all ABIs:
+
+```
+./gradlew assembleRelease
+```
+
+Note: AzaharPlus and Citra (Nintendo 3DS) only ship `arm64-v8a` binaries, so a non-arm64-v8a-only build still won't include 3DS support on 32-bit/x86 devices regardless of this flag.
+
 Tips
 First build will be slow — it downloads Gradle dependencies and compiles native cores
 If you hit NDK errors, install NDK via Android Studio → SDK Manager → SDK Tools → NDK (Side by side)

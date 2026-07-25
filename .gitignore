@@ -22,3 +22,5 @@ release.jks
 .claude/
 lemuroid.log
 __MACOSX/
+upload-keystore.jks
+keystore.properties
