@@ -43,15 +43,20 @@ export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 
 2. Build the APK
 From the project root (./Lemuroid):
+`./gradlew clean` -- clean cache
 
 
 #### The "free bundle" variant bundles cores directly into the APK (no Play dynamic delivery)
 or arm64-v8a only
 `./gradlew :lemuroid-app:assembleFreeBundle  -PabiFilter=arm64-v8a`
 or full
-`./gradlew :lemuroid-app:assembleFreeBundle`
+
 or bundle
 `./gradlew :lemuroid-app:assembleFreeBundleRelease -PabiFilter=arm64-v8a`
+
+to use it with full `./gradlew :lemuroid-app:assembleFreeBundle`:
+- comment line 86 `useLegacyPackaging = true` from lemuroid-app/build.gradle.kts
+- in gradle.properties comment line 4 and uncomment line 5 ->  Xmx2560m vs Xmx4608m
 
 #### Or for a debug build (faster, no signing required):
 `./gradlew :lemuroid-app:assembleFreeBundleDebug`
