@@ -1,15 +1,22 @@
-*** lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainScreen.kt
-- val navItems = listOf(Home, Favorites, Systems, Search)
-- val startRoute = Home
-+ val navItems = listOf(Favorites, Systems, Search)
-+ val startRoute = Systems
-
-*** lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainBottomBar.kt
-- NavigationBarItem(Home,...)
-  NavigationBarItem(Favorites, label="最愛", icon=Heart)
-  NavigationBarItem(Systems, label="主機", icon=Gamepad)
-  NavigationBarItem(Search, label="搜尋", icon=Search)
-
-*** lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainTopBar.kt
-- if (currentRoute == Home) title = "首頁"
-+ if (currentRoute == Systems) title = "主機"
+diff --git a/lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainScreen.kt b/lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainScreen.kt
+--- a/lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainScreen.kt
++++ b/lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainScreen.kt
+@@ -1,5 +1,5 @@
+-val navItems = listOf(Home, Favorites, Systems, Search)
+-val startRoute = Home
++val navItems = listOf(Favorites, Systems, Search)
++val startRoute = Systems
+ diff --git a/lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainBottomBar.kt b/lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainBottomBar.kt
+--- a/lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainBottomBar.kt
++++ b/lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainBottomBar.kt
+@@ -1,4 +1,3 @@
+-NavigationBarItem(Home,...)
+ NavigationBarItem(Favorites, label="最愛")
+ NavigationBarItem(Systems, label="主機")
+ NavigationBarItem(Search, label="搜尋")
+diff --git a/lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainTopBar.kt b/lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainTopBar.kt
+--- a/lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainTopBar.kt
++++ b/lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainTopBar.kt
+@@ -1,2 +1,2 @@
+-if (currentRoute == Home) title = "首頁"
++if (currentRoute == Systems) title = "主機"
