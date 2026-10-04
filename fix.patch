@@ -1,0 +1,15 @@
+*** lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainScreen.kt
+- val navItems = listOf(Home, Favorites, Systems, Search)
+- val startRoute = Home
++ val navItems = listOf(Favorites, Systems, Search)
++ val startRoute = Systems
+
+*** lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainBottomBar.kt
+- NavigationBarItem(Home,...)
+  NavigationBarItem(Favorites, label="最愛", icon=Heart)
+  NavigationBarItem(Systems, label="主機", icon=Gamepad)
+  NavigationBarItem(Search, label="搜尋", icon=Search)
+
+*** lemuroid-app/src/main/java/com/swordfish/lemuroid/app/mobile/main/MainTopBar.kt
+- if (currentRoute == Home) title = "首頁"
++ if (currentRoute == Systems) title = "主機"
