@@ -34,7 +34,7 @@ private fun LemuroidNavigationBar(
     navController: NavHostController,
 ) {
     NavigationBar(modifier = Modifier.fillMaxWidth()) {
-        MainNavigationRoutes.values().forEach { destination ->
+        MainNavigationRoutes.values().filter { it.route != MainRoute.HOME }.forEach { destination ->
             val isSelected = currentRoute?.root == destination.route
             val iconDrawable = if (isSelected) destination.selectedIcon else destination.unselectedIcon
 
